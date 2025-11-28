@@ -103,39 +103,7 @@ const form = document.getElementById("contactoForm");
 const tbody = document.querySelector("#datosTabla tbody");
 const toggleBtn = document.getElementById("toggleView");
 const tabla = document.getElementById("datosTabla");
-
-// Toggle formulario / tabla
-toggleBtn.addEventListener("click", () => {
-    if (form.style.display !== "none") {
-        form.style.display = "none";
-        tabla.style.display = "table";
-        toggleBtn.textContent = "Volver al Formulario";
-    } else {
-        tabla.style.display = "none";
-        form.style.display = "block";
-        toggleBtn.textContent = "Ver Tabla de Datos";
-    }
-});
-
-// Evento submit
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    // Se guardan los valores de la tabla
-    const nombre = document.getElementById("nombre").value;
-    const apellido = document.getElementById("apellido").value;
-    const dni = document.getElementById("dni").value;
-    const email = document.getElementById("email").value;
-
-    // Creamos instancia solo con los campos que se mostrarán
-    const persona = new Persona(nombre, apellido, dni, email);
-    listaPersonas.push(persona);
-
-    // Mostrar tabla actualizada
-    mostrarTabla();
-
-    form.reset();
-});
+const resetBtn = form.querySelector('input[type="reset"]');
 
 // Función para mostrar la tabla
 function mostrarTabla() {
@@ -151,6 +119,35 @@ function mostrarTabla() {
         tbody.appendChild(fila);
     });
 }
+
+toggleBtn.addEventListener("click", () => {
+    const formVisible = form.style.display !== "none";
+    form.style.display = formVisible ? "none" : "block";
+    tabla.style.display = formVisible ? "table" : "none";
+    toggleBtn.textContent = formVisible ? "Volver al Formulario" : "Ver Tabla de Datos";
+});
+
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value;
+    const apellido = document.getElementById("apellido").value;
+    const dni = document.getElementById("dni").value;
+    const email = document.getElementById("email").value;
+
+
+    const persona = new Persona(nombre, apellido, dni, email);
+    listaPersonas.push(persona);
+
+    mostrarTabla();
+
+    form.reset();
+});
+
+resetBtn.addEventListener("click", () => {
+    console.log("Formulario limpio");
+});
 </script>
 
 </body>
