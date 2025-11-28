@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Gestión de Clientes</title>
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<h1>Sistema de Gestión de Clientes</h1>
+
+<button id="toggleView">Ver Tabla de Datos</button>
+
+<!----- FORMULARIO ----->
+<form id="contactoForm">
+    <p>Los campos marcados con * son obligatorios.</p>
+    <fieldset>
+        <legend>Datos personales</legend>
+        <label for="nombre">Nombre*:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="apellido">Apellido*:</label>
+        <input type="text" id="apellido" name="apellido" required>
+
+        <label for="dni">DNI*:</label>
+        <input type="text" id="dni" name="dni" required>
+
+        <label for="contraseña">Contraseña*:</label>
+        <input type="password" id="contraseña" name="contraseña" required>
+
+        <label for="fecha">Fecha de nacimiento:</label>
+        <input type="date" id="fecha" name="fecha">
+
+        <label for="cuenta">Cuenta Bancaria:</label>
+        <input type="text" id="cuenta" name="cuenta">
+
+    </fieldset>
+    <fieldset>
+        <legend>Contacto</legend> 
+        <label for="telefono">Teléfono*:</label>
+        <input type="tel" id="telefono" name="telefono" required>
+
+        <label for="email">Email*:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="web">Página web, URL:</label>
+        <input type="url" id="web" name="web">
+    </fieldset>
+       
+<fieldset>
+        <legend>Dirección y otros datos</legend>
+        <label for="calle">Calle:</label>
+        <input type="text" id="calle" name="calle">
+
+        <label for="localidad">Localidad:</label>
+        <input type="text" id="localidad" name="localidad">
+
+        <label for="provincia">Provincia:</label>
+        <input type="text" id="provincia" name="provincia">
+
+        <label for="cp">Código Postal:</label>
+        <input type="text" id="cp" name="cp">
+</fieldset>
+
+    </fieldset>
+
+    <p>
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Limpiar">
+    </p>
+</form>
+
+<!----- TABLA DE DATOS ----->
+<table id="datosTabla">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>DNI</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+// Clase Persona (solo los campos que se mostrarán en la tabla)
+class Persona {
+    constructor(nombre, apellido, dni, email) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.email = email;
+    }
+}
+
+// Lista de objetos
+const listaPersonas = [];
+
+// Elementos
+const form = document.getElementById("contactoForm");
+const tbody = document.querySelector("#datosTabla tbody");
+const toggleBtn = document.getElementById("toggleView");
+const tabla = document.getElementById("datosTabla");
+
+// Toggle formulario / tabla
+toggleBtn.addEventListener("click", () => {
+    if (form.style.display !== "none") {
+        form.style.display = "none";
+        tabla.style.display = "table";
+        toggleBtn.textContent = "Volver al Formulario";
+    } else {
+        tabla.style.display = "none";
+        form.style.display = "block";
+        toggleBtn.textContent = "Ver Tabla de Datos";
+    }
+});
+
+// Evento submit
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Se guardan los valores de la tabla
+    const nombre = document.getElementById("nombre").value;
+    const apellido = document.getElementById("apellido").value;
+    const dni = document.getElementById("dni").value;
+    const email = document.getElementById("email").value;
+
+    // Creamos instancia solo con los campos que se mostrarán
+    const persona = new Persona(nombre, apellido, dni, email);
+    listaPersonas.push(persona);
+
+    // Mostrar tabla actualizada
+    mostrarTabla();
+
+    form.reset();
+});
+
+// Función para mostrar la tabla
+function mostrarTabla() {
+    tbody.innerHTML = "";
+    listaPersonas.forEach(p => {
+        const fila = document.createElement("tr");
+        fila.innerHTML = `
+            <td>${p.nombre}</td>
+            <td>${p.apellido}</td>
+            <td>${p.dni}</td>
+            <td>${p.email}</td>
+        `;
+        tbody.appendChild(fila);
+    });
+}
+</script>
+
+</body>
+</html>
