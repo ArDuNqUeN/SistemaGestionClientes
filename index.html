@@ -10,7 +10,7 @@
 
 <h1>Sistema de Gestión de Clientes</h1>
 
-<!-- Botón para alternar formulario / tabla -->
+<!-- Botón para alternar entre formulario y tabla de datos -->
 <button id="toggleView">Ver Tabla de Datos</button>
 
 <!-- =====================
@@ -19,7 +19,7 @@
 <form id="contactoForm">
     <p>Los campos marcados con * son obligatorios.</p>
 
-    <!-- Datos personales -->
+    <!-- Sección de datos personales -->
     <fieldset>
         <legend>Datos personales</legend>
         <label for="nombre">Nombre*:</label>
@@ -41,7 +41,7 @@
         <input type="text" id="cuenta" name="cuenta">
     </fieldset>
 
-    <!-- Contacto -->
+    <!-- Sección de contacto -->
     <fieldset>
         <legend>Contacto</legend> 
         <label for="telefono">Teléfono*:</label>
@@ -54,7 +54,7 @@
         <input type="url" id="web" name="web">
     </fieldset>
 
-    <!-- Dirección -->
+    <!-- Sección de dirección -->
     <fieldset>
         <legend>Dirección y otros datos</legend>
         <label for="calle">Calle:</label>
@@ -70,16 +70,18 @@
         <input type="text" id="cp" name="cp">
     </fieldset>
 
+    <!-- Botones de envío y limpieza -->
     <div class="botones">
-         <p>
-        <input type="submit" value="Enviar">
-        <input type="reset" value="Limpiar">
+        <p>
+            <input type="submit" value="Enviar">
+            <input type="reset" value="Limpiar">
         </p>
     </div>
-   
 </form>
 
-
+<!-- =====================
+     TABLA DE DATOS
+     ===================== -->
 <table id="datosTabla" style="display:none;">
     <thead>
         <tr>
@@ -92,70 +94,91 @@
     <tbody></tbody>
 </table>
 
-
+<!-- =====================
+     SCRIPT DE JAVASCRIPT
+     ===================== -->
 <script>
-
+// ============================
+// CLASE PARA DEFINIR UN CLIENTE
+// ============================
 class Persona {
     constructor(nombre, apellido, dni, email) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.email = email;
+        this.nombre = nombre;     // Propiedad nombre
+        this.apellido = apellido; // Propiedad apellido
+        this.dni = dni;           // Propiedad DNI
+        this.email = email;       // Propiedad email
     }
 
+    // Método para mostrar resumen del cliente
     resumen() {
         return `${this.nombre} ${this.apellido} (${this.dni}) - ${this.email}`;
     }
 }
 
-
+// ============================
+// ARRAY PARA GUARDAR LOS CLIENTES
+// ============================
 const listaPersonas = [];
 
-const form = document.getElementById("contactoForm");
-const tbody = document.querySelector("#datosTabla tbody");
-const toggleBtn = document.getElementById("toggleView");
-const tabla = document.getElementById("datosTabla");
-const resetBtn = form.querySelector('input[type="reset"]');
+// ============================
+// ELEMENTOS DEL DOM
+// ============================
+const form = document.getElementById("contactoForm");           // Formulario
+const tbody = document.querySelector("#datosTabla tbody");       // Cuerpo de la tabla
+const toggleBtn = document.getElementById("toggleView");        // Botón toggle
+const tabla = document.getElementById("datosTabla");            // Tabla
+const resetBtn = form.querySelector('input[type="reset"]');     // Botón limpiar
 
+// ============================
+// FUNCIONES
+// ============================
 
+// Función para mostrar la tabla con los clientes añadidos
 function mostrarTabla() {
-    tbody.innerHTML = "";
+    tbody.innerHTML = ""; // Limpiar tabla
     listaPersonas.forEach(p => {
-        const fila = document.createElement("tr");
+        const fila = document.createElement("tr"); // Crear fila
         fila.innerHTML = `
             <td>${p.nombre}</td>
             <td>${p.apellido}</td>
             <td>${p.dni}</td>
             <td>${p.email}</td>
         `;
-        tbody.appendChild(fila);
+        tbody.appendChild(fila); // Añadir fila al tbody
     });
 }
 
+// ============================
+// EVENT LISTENERS
+// ============================
+
+// Alternar visibilidad entre formulario y tabla
 toggleBtn.addEventListener("click", () => {
-    const formVisible = form.style.display !== "none";
+    const formVisible = form.style.display !== "none"; // Verificar estado actual
     form.style.display = formVisible ? "none" : "block";
     tabla.style.display = formVisible ? "table" : "none";
     toggleBtn.textContent = formVisible ? "Volver al Formulario" : "Ver Tabla de Datos";
 });
 
-// Submit del formulario
+// Manejar envío del formulario
 form.addEventListener("submit", (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Evitar recarga de página
 
+    // Obtener valores de los inputs
     const nombre = document.getElementById("nombre").value;
     const apellido = document.getElementById("apellido").value;
     const dni = document.getElementById("dni").value;
     const email = document.getElementById("email").value;
 
+    // Crear nueva instancia de Persona
     const persona = new Persona(nombre, apellido, dni, email);
-    listaPersonas.push(persona);
+    listaPersonas.push(persona); // Añadir a array
 
-    mostrarTabla();
-    form.reset();
+    mostrarTabla(); // Actualizar tabla
+    form.reset();   // Limpiar formulario
 });
 
-// Reset del formulario
+// Evento para limpiar formulario
 resetBtn.addEventListener("click", () => {
     console.log("Formulario limpiado");
 });

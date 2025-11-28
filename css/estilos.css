@@ -1,25 +1,29 @@
-/* =================== ESTILOS GENERALES =================== */
+/* =======================
+   ESTILOS GENERALES
+   ======================= */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f7f9fc;
-    color: hsl(0, 0%, 20%);
+    background-color: #f7f9fc; 
+    color: hsl(0, 0%, 20%);    
     margin: 0;
     padding: 20px;
 }
 
 h1 {
     text-align: center;
-    color: #59415e;
+    color: #86608E; 
     margin-bottom: 25px;
 }
 
-p{
+p {
     line-height: 1.6;
     margin-bottom: 15px;
     font-size: small;
 }
 
-/* =================== FORMULARIO =================== */
+/* =======================
+   FORMULARIO
+   ======================= */
 form {
     max-width: 700px;
     background-color: #fff;
@@ -27,6 +31,7 @@ form {
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     margin: 0 auto;
+    transition: all 0.3s ease; 
 }
 
 label {
@@ -40,16 +45,24 @@ input, textarea, select {
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 6px; 
     box-sizing: border-box;
     font-size: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #86608E; 
+    box-shadow: 0 0 5px rgba(134, 96, 142, 0.5);
 }
 
 textarea {
-    resize: none;
+    resize: none; 
 }
 
-/* =================== FIELDSETS =================== */
+/* =======================
+   FIELDSETS
+   ======================= */
 fieldset {
     border: 1px solid #dcdcdc;
     padding: 15px;
@@ -75,29 +88,34 @@ fieldset label {
     margin-right: 20px;
 }
 
-/* =================== BOTÓN TOGGLE =================== */
+/* =======================
+   BOTÓN TOGGLE (Formulario / Tabla)
+   ======================= */
 #toggleView {
     display: block;
     margin: 0 auto 20px auto;
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #86608E;
+    background-color: #86608E; 
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 6px; 
     cursor: pointer;
-    transition: 0.3s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #toggleView:hover {
-    background-color: #86608E;
+    background-color: #744a7a; 
+    transform: scale(1.03);     
 }
 
-/* =================== BOTONES FORMULARIO =================== */
+/* =======================
+   BOTONES DEL FORMULARIO
+   ======================= */
 input[type="submit"],
 input[type="reset"] {
     width: 40%;
-    background-color: #86608E;
+    background-color: #86608E; 
     color: white;
     border: none;
     padding: 12px 20px;
@@ -105,21 +123,24 @@ input[type="reset"] {
     border-radius: 6px;
     cursor: pointer;
     margin: 5px;
-    transition: 0.3s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-    background-color: #86608E;
+    background-color: #744a7a;
+    transform: scale(1.03);
 }
 
 .botones {
     text-align: center;
 }
 
-/* =================== TABLA =================== */
+/* =======================
+   TABLA DE DATOS
+   ======================= */
 #datosTabla {
-    display: none;
+    display: none; 
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -134,7 +155,7 @@ input[type="reset"]:hover {
 }
 
 #datosTabla th {
-    background-color: #86608E;
+    background-color: #86608E; 
     color: white;
 }
 
@@ -143,5 +164,6 @@ input[type="reset"]:hover {
 }
 
 #datosTabla tr:hover {
-    background-color: #dceafc;
+    background-color: #f8dcfc;
+    transition: background-color 0.3s ease;
 }
