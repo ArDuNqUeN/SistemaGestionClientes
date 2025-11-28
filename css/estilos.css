@@ -113,7 +113,7 @@ input[type="reset"]:hover {
     background-color: #86608E;
 }
 
-#botones {
+.botones {
     text-align: center;
 }
 

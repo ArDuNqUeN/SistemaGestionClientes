@@ -3,18 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema Gestión de Clientes</title>
+<title>Sistema de Gestión de Clientes</title>
 <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
 <h1>Sistema de Gestión de Clientes</h1>
 
+<!-- Botón para alternar formulario / tabla -->
 <button id="toggleView">Ver Tabla de Datos</button>
 
-<!----- FORMULARIO ----->
+<!-- =====================
+     FORMULARIO DE CLIENTES
+     ===================== -->
 <form id="contactoForm">
     <p>Los campos marcados con * son obligatorios.</p>
+
+    <!-- Datos personales -->
     <fieldset>
         <legend>Datos personales</legend>
         <label for="nombre">Nombre*:</label>
@@ -34,8 +39,9 @@
 
         <label for="cuenta">Cuenta Bancaria:</label>
         <input type="text" id="cuenta" name="cuenta">
-
     </fieldset>
+
+    <!-- Contacto -->
     <fieldset>
         <legend>Contacto</legend> 
         <label for="telefono">Teléfono*:</label>
@@ -47,8 +53,9 @@
         <label for="web">Página web, URL:</label>
         <input type="url" id="web" name="web">
     </fieldset>
-       
-<fieldset>
+
+    <!-- Dirección -->
+    <fieldset>
         <legend>Dirección y otros datos</legend>
         <label for="calle">Calle:</label>
         <input type="text" id="calle" name="calle">
@@ -61,18 +68,19 @@
 
         <label for="cp">Código Postal:</label>
         <input type="text" id="cp" name="cp">
-</fieldset>
-
     </fieldset>
 
-    <p>
+    <div class="botones">
+         <p>
         <input type="submit" value="Enviar">
         <input type="reset" value="Limpiar">
-    </p>
+        </p>
+    </div>
+   
 </form>
 
-<!----- TABLA DE DATOS ----->
-<table id="datosTabla">
+
+<table id="datosTabla" style="display:none;">
     <thead>
         <tr>
             <th>Nombre</th>
@@ -84,8 +92,9 @@
     <tbody></tbody>
 </table>
 
+
 <script>
-// Clase Persona (solo los campos que se mostrarán en la tabla)
+
 class Persona {
     constructor(nombre, apellido, dni, email) {
         this.nombre = nombre;
@@ -93,19 +102,22 @@ class Persona {
         this.dni = dni;
         this.email = email;
     }
+
+    resumen() {
+        return `${this.nombre} ${this.apellido} (${this.dni}) - ${this.email}`;
+    }
 }
 
-// Lista de objetos
+
 const listaPersonas = [];
 
-// Elementos
 const form = document.getElementById("contactoForm");
 const tbody = document.querySelector("#datosTabla tbody");
 const toggleBtn = document.getElementById("toggleView");
 const tabla = document.getElementById("datosTabla");
 const resetBtn = form.querySelector('input[type="reset"]');
 
-// Función para mostrar la tabla
+
 function mostrarTabla() {
     tbody.innerHTML = "";
     listaPersonas.forEach(p => {
@@ -127,7 +139,7 @@ toggleBtn.addEventListener("click", () => {
     toggleBtn.textContent = formVisible ? "Volver al Formulario" : "Ver Tabla de Datos";
 });
 
-
+// Submit del formulario
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -136,17 +148,16 @@ form.addEventListener("submit", (e) => {
     const dni = document.getElementById("dni").value;
     const email = document.getElementById("email").value;
 
-
     const persona = new Persona(nombre, apellido, dni, email);
     listaPersonas.push(persona);
 
     mostrarTabla();
-
     form.reset();
 });
 
+// Reset del formulario
 resetBtn.addEventListener("click", () => {
-    console.log("Formulario limpio");
+    console.log("Formulario limpiado");
 });
 </script>
 
